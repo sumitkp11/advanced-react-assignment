@@ -5,15 +5,18 @@ import { useNavigate } from "react-router-dom";
 
 
 export default function DisplayTasks() {
-    let [sortIcon, setSortIcon] = useState('');
-    let [currentSelectedColumn, setSelectedColumn] = useState('');
+    let [sortIcon, setSortIcon] = useState('▲');
+    let [currentSelectedColumn, setSelectedColumn] = useState('title');
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { tasks, loading, error } = useSelector((state) => state.data);
-    const [taskList, setTaskList] = useState(tasks);
+    // get array of tasks from the redux store
+    const { tasks } = useSelector((state) => state.data);
+
+    // local state to handle sorting by table headers
+    let [taskList, setTaskList] = useState(tasks);
 
     /**
-     * 
+     * @description function to open task details by id in an different page
      * @param {*} task 
      */
     const openTaskDetails = (task) => {
@@ -31,7 +34,7 @@ export default function DisplayTasks() {
     };
 
     /**
-     * 
+     * @description function to delete task by its id
      * @param {*} taskId 
      */
     const deleteTask = (taskId) => {
@@ -41,7 +44,7 @@ export default function DisplayTasks() {
     };
 
     /**
-     * @description function to sort table data based on columns header selection
+     * @description function to sort table data based on table header selection
      * @param {*} input 
      * @param {*} sortOrder 
      * @example ▲ - ascending order, ▼ - descending order
@@ -50,19 +53,18 @@ export default function DisplayTasks() {
         setSelectedColumn(column);
         setSortIcon(sortIcon === "▲" ? "▼" : "▲");
         const sortedItems = [...taskList].sort((a, b) => sortIcon === "▲"? b[column].localeCompare(a[column]) :  a[column].localeCompare(b[column]));
-        // const sortedItems = [...taskList].sort((a, b) => sortIcon === "▲"? a['title'].localeCompare(b['title']) :  b['title'].localeCompare(a['title']));
-        console.log("sorted", sortedItems)
         setTaskList(sortedItems);
     }
 
+    // fetch tasks from the API whenever the component mounts
     useEffect(() => {
         dispatch(fetchTaskApiData());
     }, [dispatch]);
 
-
-
-    if (loading) return <div>Loading...</div>
-    if (error) return <div>Error: {error}</div>
+    // update taskList whenever there is changes to Redux store. Mostly in case of task deletion.
+    useEffect(() => {
+        setTaskList(tasks);
+    }, [tasks]);
 
     return (
         <div className="flex items-center justify-center h-auto m-5">
@@ -75,8 +77,8 @@ export default function DisplayTasks() {
                                 <th className="hover:bg-slate-200 hover:text-black border border-slate-600 bg-slate-600 text-white w-40" onClick={() => sortColumnByInput("assignedTo")}>{currentSelectedColumn !== "assignedTo" ? "Assigned To" : `Assigned To ${sortIcon}`}</th>
                                 <th className="hover:bg-slate-200 hover:text-black border border-slate-600 bg-slate-600 text-white w-40" onClick={() => sortColumnByInput("status")}>{currentSelectedColumn !== "status" ? "Status" : `Status ${sortIcon}`}</th>
                                 <th className="hover:bg-slate-200 hover:text-black border border-slate-600 bg-slate-600 text-white w-40" onClick={() => sortColumnByInput("priority")}>{currentSelectedColumn !== "priority" ? "Priority" : `Priority ${sortIcon}`}</th>
-                                <th className="hover:bg-slate-200 hover:text-black border border-slate-600 bg-slate-600 text-white w-40">{currentSelectedColumn !== "startDate" ? "Start Date" : `Start Date ${sortIcon}`}</th>
-                                <th className="hover:bg-slate-200 hover:text-black border border-slate-600 bg-slate-600 text-white w-40">{currentSelectedColumn !== "endDate" ? "End Date" : `End Date ${sortIcon}`}</th>
+                                <th className="border border-slate-600 bg-slate-600 text-white w-40">{currentSelectedColumn !== "startDate" ? "Start Date" : `Start Date ${sortIcon}`}</th>
+                                <th className="border border-slate-600 bg-slate-600 text-white w-40">{currentSelectedColumn !== "endDate" ? "End Date" : `End Date ${sortIcon}`}</th>
                                 <th className="border border-slate-600 bg-slate-600 text-white w-40">Actions</th>
 
                             </tr>
@@ -90,7 +92,7 @@ export default function DisplayTasks() {
                                     <td className="border border-slate-700 text-center">{task.priority}</td>
                                     <td className="border border-slate-700 text-center">{task.startDate}</td>
                                     <td className="border border-slate-700 text-center">{task.endDate}</td>
-                                    <td className="border border-slate-700"><button className="rounded-full hover:bg-slate-300 hover:text-slate-900 border-2 border-white px-5 mb-2" onClick={(event) => { event.stopPropagation(); navigate('/edit'); }}>📝</button><button id="delete-btn" className="rounded-full hover:bg-slate-300 hover:text-slate-900 border-2 border-white px-5" onClick={(event) => { event.stopPropagation(); deleteTask(task.id); }}>❌</button></td>
+                                    <td className="border border-slate-700 "><button className="ml-2 rounded-full hover:bg-slate-300 hover:text-slate-900 border-2 border-white px-5 mb-2" onClick={(event) => { event.stopPropagation(); navigate('/edit'); }}>📝</button><button id="delete-btn" className="rounded-full hover:bg-slate-300 hover:text-slate-900 border-2 border-white px-5 ml-2" onClick={(event) => { event.stopPropagation(); deleteTask(task.id); }}>❌</button></td>
                                 </tr>
                             ))}
                         </tbody>

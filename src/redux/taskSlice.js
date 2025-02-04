@@ -2,9 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 
 const initialState = {
-    tasks: [],
-    loading: false,
-    error: null
+    tasks: []
 }
 export const fetchTaskApiData = createAsyncThunk('tasks/fetchTasks',
     async () => {
