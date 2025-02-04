@@ -25,12 +25,12 @@
 
 ## How To Use?
 ### Homepage `/`
-    - You will get a table of tasks which are loaded from a remote API. You'll need internet connection in order to load.
-    - Following table headers can be clicked to switch between ascending and descending sort orders: Title, Assigned To, Status and Priority.
-    - Clicking anywhere in the table row will make you go to `/edit` page to edit task details and update new changes.
-    - Under `Actions` table header, you see `Edit` and `Delete` buttons.
-    - Upon clicking on Delete button or represented with `❌`, will first ask for confirmation through a alert box.
-    - Clicking on Header Title will redirect to home.
+- You will get a table of tasks which are loaded from a remote API. You'll need internet connection in order to load.
+- Following table headers can be clicked to switch between ascending and descending sort orders: Title, Assigned To, Status and Priority.
+- Clicking anywhere in the table row will make you go to `/edit` page to edit task details and update new changes.
+- Under `Actions` table header, you see `Edit` and `Delete` buttons.
+- Upon clicking on Delete button or represented with `❌`, will first ask for confirmation through a alert box.
+- Clicking on Header Title will redirect to home.
 
 ### Edit Page `/edit`
 
