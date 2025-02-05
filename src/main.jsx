@@ -6,6 +6,7 @@ import Header from "./components/Header";
 import DisplayTasks from "./components/DisplayTasks";
 import EditTask from "./components/EditTask";
 import TaskDetails from "./components/TaskDetails";
+import AddTask from "./components/AddTask";
 
 createRoot(document.getElementById('root')).render(
   <Provider store={taskManagerStore}>
@@ -15,6 +16,7 @@ createRoot(document.getElementById('root')).render(
           <Route exact path="/" element={<DisplayTasks />} />
           <Route exact path="/edit" element={<EditTask />} />
           <Route exact path="/details" element={<TaskDetails />} />
+          <Route exact path="/add" element={<AddTask />} />
         </Routes>
     </BrowserRouter>
   </Provider>

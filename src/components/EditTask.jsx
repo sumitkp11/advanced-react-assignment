@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { DateFormatForMonth } from "../utilities/dateFormatter";
 
 export default function EditTask() {
 
@@ -28,8 +29,8 @@ export default function EditTask() {
             assignedTo,
             status,
             priority,
-            startDate,
-            endDate
+            startDate: DateFormatForMonth(endDate),
+            endDate: DateFormatForMonth(endDate)
         };
 
         const response = await fetch(`https://679b417a33d316846323349a.mockapi.io/tasks/${taskId}`, {

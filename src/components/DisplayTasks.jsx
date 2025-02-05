@@ -83,7 +83,10 @@ export default function DisplayTasks() {
     }, [tasks]);
 
     return (
+        <>
+        <button type="button" className="rounded-full bg-lime-300 hover:bg-slate-900 hover:text-slate-50 border-2 border-white px-5 py-1 ml-5 mt-5" onClick={() => { navigate('/add') }}>Add New Task</button>
         <div className="flex items-center justify-center h-auto m-5">
+            
             {taskList.length > 0 ?
                 <div>
                     <table className="border-separate border-spacing-2 border border-slate-500 table-auto">
@@ -108,12 +111,12 @@ export default function DisplayTasks() {
                                     <td className="border border-slate-700 text-center">{task.priority}</td>
                                     <td className="border border-slate-700 text-center">{FormatIsoDate(task.startDate)}</td>
                                     <td className="border border-slate-700 text-center">{FormatIsoDate(task.endDate)}</td>
-                                    <td className="border border-slate-700 "><button title="Edit Task" className="ml-2 rounded-full hover:bg-slate-300 hover:text-slate-900 border-2 border-white px-5 mb-2" onClick={(event) => { event.stopPropagation(); editTaskById(task); }}>📝</button><button title="Delete Task" id="delete-btn" className="rounded-full hover:bg-slate-300 hover:text-slate-900 border-2 border-white px-5 ml-2" onClick={(event) => { event.stopPropagation(); deleteTask(task.id); }}>❌</button></td>
+                                    <td className="border border-slate-700 "><button title="Edit Task" className="ml-2 rounded-full hover:bg-slate-300 hover:text-slate-900 border-2 border-black-100 hover:border-white px-5 mt-2 mb-2" onClick={(event) => { event.stopPropagation(); editTaskById(task); }}>📝</button><button title="Delete Task" id="delete-btn" className="rounded-full hover:bg-slate-300 hover:text-slate-900 border-2 border-black-100 hover:border-white px-5 ml-2" onClick={(event) => { event.stopPropagation(); deleteTask(task.id); }}>❌</button></td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                 </div> : <div className="flex font-bold text-xl text-center mt-4"><h2>No task to show. Please wait for the books to load</h2></div>}
-        </div>
+        </div></>
     )
 }
