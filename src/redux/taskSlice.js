@@ -30,6 +30,24 @@ export const deleteTaskById = createAsyncThunk('tasks/deleteTasks',
     }
 );
 
+export const updateTaskById = createAsyncThunk('tasks/updateTasks',
+    async (taskId) => {
+        const response = await fetch(`https://679b417a33d316846323349a.mockapi.io/tasks/${taskId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+            window.alert("Task deleted successfully from Thunk");
+            return taskId;
+        } else {
+            window.alert("Failed to delete task from Thunk");
+        }
+    }
+)
+
 export const taskSlice = createSlice({
     name: 'taskManager',
     initialState,

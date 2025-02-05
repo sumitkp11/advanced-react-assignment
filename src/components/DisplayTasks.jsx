@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchTaskApiData, deleteTaskById } from "../redux/taskSlice";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { parseISO, format } from 'date-fns';
 
 
 export default function DisplayTasks() {
@@ -20,6 +21,8 @@ export default function DisplayTasks() {
      * @param {*} task 
      */
     const openTaskDetails = (task) => {
+        const startDate = formatIsoDate(task.startDate);
+        const endDate = formatIsoDate(task.endDate);
         navigate('/details', {
             state: {
                 taskId: task.id,
@@ -27,8 +30,8 @@ export default function DisplayTasks() {
                 taskAssign: task.assignedTo,
                 taskStatus: task.status,
                 taskPriority: task.priority,
-                taskStart: task.startDate,
-                taskEnd: task.endDate
+                taskStart: startDate,
+                taskEnd: endDate
             }
         });
     };
@@ -54,6 +57,34 @@ export default function DisplayTasks() {
         setSortIcon(sortIcon === "▲" ? "▼" : "▲");
         const sortedItems = [...taskList].sort((a, b) => sortIcon === "▲"? b[column].localeCompare(a[column]) :  a[column].localeCompare(b[column]));
         setTaskList(sortedItems);
+    }
+
+    const editTaskById = (task) => {
+        const startDate = formatIsoDate(task.startDate);
+        const endDate = formatIsoDate(task.endDate);
+        navigate('/edit', {
+            state: {
+                taskId: task.id,
+                taskTitle: task.title,
+                taskAssign: task.assignedTo,
+                taskStatus: task.status,
+                taskPriority: task.priority,
+                taskStart: startDate,
+                taskEnd: endDate
+            }
+        });
+
+
+    }
+
+    const formatIsoDate = (isoDate) => {
+        if(isoDate.includes("T")){
+            const date = parseISO(isoDate);
+        const formattedDate = format(date, 'yyyy-MM-dd');
+        return formattedDate;
+        }
+        return isoDate;
+        
     }
 
     // fetch tasks from the API whenever the component mounts
@@ -90,9 +121,9 @@ export default function DisplayTasks() {
                                     <td className="border border-slate-700 text-center">{task.assignedTo}</td>
                                     <td className="border border-slate-700 text-center">{task.status}</td>
                                     <td className="border border-slate-700 text-center">{task.priority}</td>
-                                    <td className="border border-slate-700 text-center">{task.startDate}</td>
-                                    <td className="border border-slate-700 text-center">{task.endDate}</td>
-                                    <td className="border border-slate-700 "><button className="ml-2 rounded-full hover:bg-slate-300 hover:text-slate-900 border-2 border-white px-5 mb-2" onClick={(event) => { event.stopPropagation(); navigate('/edit'); }}>📝</button><button id="delete-btn" className="rounded-full hover:bg-slate-300 hover:text-slate-900 border-2 border-white px-5 ml-2" onClick={(event) => { event.stopPropagation(); deleteTask(task.id); }}>❌</button></td>
+                                    <td className="border border-slate-700 text-center">{formatIsoDate(task.startDate)}</td>
+                                    <td className="border border-slate-700 text-center">{formatIsoDate(task.endDate)}</td>
+                                    <td className="border border-slate-700 "><button className="ml-2 rounded-full hover:bg-slate-300 hover:text-slate-900 border-2 border-white px-5 mb-2" onClick={(event) => { event.stopPropagation(); editTaskById(task); }}>📝</button><button id="delete-btn" className="rounded-full hover:bg-slate-300 hover:text-slate-900 border-2 border-white px-5 ml-2" onClick={(event) => { event.stopPropagation(); deleteTask(task.id); }}>❌</button></td>
                                 </tr>
                             ))}
                         </tbody>

@@ -6,9 +6,6 @@ export default function Header() {
             <div className="text-white m-4 font-bold text-2xl">
                 <Link to="/">Task Manager App</Link>
             </div>
-            <div className="m-4 font-bold text-2xl text-right w-auto">
-            <Link to="/info">Project Info</Link>
-                </div>       
         </div>
     )
 }

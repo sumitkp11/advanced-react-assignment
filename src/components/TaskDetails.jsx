@@ -7,7 +7,6 @@ export default function TaskDetails() {
     const location = useLocation();
 
     const {
-        taskId, 
         taskTitle, 
         taskAssign,
         taskStatus,
