@@ -13,7 +13,7 @@ export default function EditTask() {
         taskPriority,
         taskStart,
         taskEnd } = location.state || {};
-    
+
     const [title, setTitle] = useState(taskTitle);
     const [assignedTo, setAssign] = useState(taskAssign);
     const [status, setStatus] = useState(taskStatus);
@@ -21,20 +21,8 @@ export default function EditTask() {
     const [startDate, setStartDate] = useState(taskStart);
     const [endDate, setEndDate] = useState(taskEnd);
 
-    const formatDateForMonth = (rawDate) => {
-        let dateMonth = "";
-        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-        let formatDate = rawDate.split('-');
-        dateMonth = months[formatDate[1] - 1];
-        formatDate = `${formatDate[2]}${dateMonth}${formatDate[0]}`;
-        return formatDate;
-    }
-
     const submitTask = async (event) => {
         event.preventDefault();
-        console.log("Date", formatDateForMonth(startDate))
-        setStartDate(formatDateForMonth(startDate));
-        setEndDate(formatDateForMonth(endDate));
         const data = {
             title,
             assignedTo,
@@ -57,20 +45,13 @@ export default function EditTask() {
         } else {
             window.alert("Failed to update task details");
         }
-
-
-
-
-
-
     }
+
     return (
         <div>
             <h2 className="font-bold text-xl text-center mt-4">Edit Task Details for <span className="text-blue-600">{taskAssign}</span></h2>
             <p className="text-red-600 font-bold text-center mt-4">Leave blank for default values</p>
-            
             <div className="flex items-center justify-center h-auto m-5">
-                
                 <form onSubmit={submitTask}>
                     <div id="task-title-text" className="mb-3">
                         <label htmlFor="title" className="text-left mr-20 font-bold ">Title:</label><input type="text" name="" id="title" className="rounded-lg border-4 border-red px-2" defaultValue={taskTitle} onChange={(event) => setTitle(event.target.value)} contentEditable />
@@ -141,11 +122,8 @@ export default function EditTask() {
                         <button type="submit" className="rounded-full bg-lime-300 hover:bg-slate-900 hover:text-slate-50 border-2 border-white px-5 py-1">Update</button>
                         <button type="reset" className="rounded-full bg-lime-300 hover:bg-slate-900 hover:text-slate-50 border-2 border-white px-5 py-1">Reset</button>
                         <button type="button" className="rounded-full bg-lime-300 hover:bg-slate-900 hover:text-slate-50 border-2 border-white px-5 py-1" onClick={() => { navigate('/') }}>Back to Home</button>
-
                     </div>
-
                 </form>
-
             </div>
         </div>
     )
