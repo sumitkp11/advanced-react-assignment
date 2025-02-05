@@ -29,8 +29,8 @@ export default function DisplayTasks() {
                 taskAssign: task.assignedTo,
                 taskStatus: task.status,
                 taskPriority: task.priority,
-                taskStart: task.startDate,
-                taskEnd: task.endDate
+                taskStart: FormatIsoDate(task.startDate),
+                taskEnd: FormatIsoDate(task.endDate)
             }
         });
     };
@@ -66,8 +66,8 @@ export default function DisplayTasks() {
                 taskAssign: task.assignedTo,
                 taskStatus: task.status,
                 taskPriority: task.priority,
-                taskStart: task.startDate,
-                taskEnd: task.endDate
+                taskStart: FormatIsoDate(task.startDate),
+                taskEnd: FormatIsoDate(task.endDate)
             }
         });
     }
@@ -108,7 +108,7 @@ export default function DisplayTasks() {
                                     <td className="border border-slate-700 text-center">{task.priority}</td>
                                     <td className="border border-slate-700 text-center">{FormatIsoDate(task.startDate)}</td>
                                     <td className="border border-slate-700 text-center">{FormatIsoDate(task.endDate)}</td>
-                                    <td className="border border-slate-700 "><button className="ml-2 rounded-full hover:bg-slate-300 hover:text-slate-900 border-2 border-white px-5 mb-2" onClick={(event) => { event.stopPropagation(); editTaskById(task); }}>📝</button><button id="delete-btn" className="rounded-full hover:bg-slate-300 hover:text-slate-900 border-2 border-white px-5 ml-2" onClick={(event) => { event.stopPropagation(); deleteTask(task.id); }}>❌</button></td>
+                                    <td className="border border-slate-700 "><button title="Edit Task" className="ml-2 rounded-full hover:bg-slate-300 hover:text-slate-900 border-2 border-white px-5 mb-2" onClick={(event) => { event.stopPropagation(); editTaskById(task); }}>📝</button><button title="Delete Task" id="delete-btn" className="rounded-full hover:bg-slate-300 hover:text-slate-900 border-2 border-white px-5 ml-2" onClick={(event) => { event.stopPropagation(); deleteTask(task.id); }}>❌</button></td>
                                 </tr>
                             ))}
                         </tbody>

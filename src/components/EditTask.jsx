@@ -42,6 +42,7 @@ export default function EditTask() {
 
         if (response.ok) {
             window.alert("Task details updated successfully");
+            navigate('/');
         } else {
             window.alert("Failed to update task details");
         }
@@ -50,7 +51,7 @@ export default function EditTask() {
     return (
         <div>
             <h2 className="font-bold text-xl text-center mt-4">Edit Task Details for <span className="text-blue-600">{taskAssign}</span></h2>
-            <p className="text-red-600 font-bold text-center mt-4">Leave blank for default values</p>
+            <p className="text-red-600 font-bold text-center mt-4">Leave unchanged for default values</p>
             <div className="flex items-center justify-center h-auto m-5">
                 <form onSubmit={submitTask}>
                     <div id="task-title-text" className="mb-3">
@@ -119,8 +120,8 @@ export default function EditTask() {
 
                     </div>
                     <div className="mb-3">
-                        <button type="submit" className="rounded-full bg-lime-300 hover:bg-slate-900 hover:text-slate-50 border-2 border-white px-5 py-1">Update</button>
-                        <button type="reset" className="rounded-full bg-lime-300 hover:bg-slate-900 hover:text-slate-50 border-2 border-white px-5 py-1">Reset</button>
+                        <button title="Update task details" type="submit" className="rounded-full bg-lime-300 hover:bg-slate-900 hover:text-slate-50 border-2 border-white px-5 py-1">Update</button>
+                        <button title="Reset form" type="reset" className="rounded-full bg-lime-300 hover:bg-slate-900 hover:text-slate-50 border-2 border-white px-5 py-1">Reset</button>
                         <button type="button" className="rounded-full bg-lime-300 hover:bg-slate-900 hover:text-slate-50 border-2 border-white px-5 py-1" onClick={() => { navigate('/') }}>Back to Home</button>
                     </div>
                 </form>
