@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DateFormatForMonth } from "../utilities/dateFormatter";
+import { useDispatch } from "react-redux";
+import { addTask } from "../redux/taskSlice";
 
 export default function AddTask() {
     const [title, setTitle] = useState("");
@@ -11,6 +13,7 @@ export default function AddTask() {
     const [endDate, setEndDate] = useState("");
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const submitTask = async (event) => {
         event.preventDefault();
@@ -23,20 +26,7 @@ export default function AddTask() {
             endDate: DateFormatForMonth(endDate)
         };
 
-        const response = await fetch(`https://679b417a33d316846323349a.mockapi.io/tasks`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
-
-        if (response.ok) {
-            window.alert("Task details updated successfully");
-            navigate('/');
-        } else {
-            window.alert("Failed to update task details");
-        }
+        dispatch(addTask(data));
     }
 
     return (
